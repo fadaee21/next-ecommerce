@@ -3,11 +3,11 @@ import { ProductsTabs } from "type";
 import Product from "./Product";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 interface Prop {
-  tabs: ProductsTabs | null;
+  tabs: ProductsTabs;
 }
 
 const ProductsTab = ({ tabs }: Prop) => {
-  const { tabList, tabPanel } = tabs!;
+  const { tabList, tabPanel } = tabs;
   return (
     <>
       <section className="food_section layout_padding-bottom">
@@ -27,7 +27,7 @@ const ProductsTab = ({ tabs }: Prop) => {
             <div className="filters-content">
               {tabPanel.map((panel, index1) => (
                 <TabPanel key={index1}>
-                  <div  className="row grid">
+                  <div className="row grid">
                     {panel.map((product, index2) => (
                       <Product key={index2} {...product} />
                     ))}
