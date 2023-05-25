@@ -1293,3 +1293,7 @@ a:focus {
   font-family: "Vazir" !important;
   direction: rtl;
 }
+
+.react-tabs__tab.active:focus-visible {
+  outline: none;
+}
