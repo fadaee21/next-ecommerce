@@ -6,6 +6,8 @@ import { ErrorResponse, ProductsTabs, ProductsTabsComplete } from "type";
 import Features from "@/components/features";
 import { handleError } from "lib/handleError";
 import ProductsTab from "@/components/product/ProductsTab";
+import About from "@/components/about";
+import ContactUs from "@/components/contactUs";
 interface HomeProps {
   productsTab: ProductsTabs | null;
   error: AxiosError<ErrorResponse, any> | null;
@@ -21,6 +23,8 @@ const Home = ({ productsTab, error }: HomeProps) => {
     <>
       <Features />
       {productsTab && <ProductsTab tabs={productsTab} />}
+      <About />
+      <ContactUs />
     </>
   );
 };
