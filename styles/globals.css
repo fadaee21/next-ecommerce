@@ -1297,3 +1297,17 @@ a:focus {
 .react-tabs__tab.active:focus-visible {
   outline: none;
 }
+
+/* for nprogress */
+#nprogress .bar {
+  display: none;
+}
+/* Fancy blur effect */
+#nprogress .peg {
+  box-shadow: 0 0 10px #ffbe33, 0 0 5px #ffbe33;
+}
+
+#nprogress .spinner-icon {
+  border-top-color: #ffbe33;
+  border-left-color: #ffbe33;
+}

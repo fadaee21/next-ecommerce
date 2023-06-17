@@ -13,7 +13,7 @@ const ContactForm = () => {
   const [loading, setLoading] = useState(false);
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log([name, email, subject, text].every(Boolean));
+  
     if (![name, email, subject, text].every(Boolean)) {
       toast.error("تمام موارد فرم تماس با ما الزامی است");
       return;
