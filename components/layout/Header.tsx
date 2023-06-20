@@ -3,18 +3,18 @@ import Image from "next/image";
 import heroImage from "../../public/images/hero-bg.jpg";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useAuth } from "@/context/AuthContext";
+const navItem = [
+  { name: "صفحه اصلی", link: "/" },
+  { name: "منو", link: "/menu" },
+  { name: "تماس باما", link: "/contact" },
+  { name: "درباره ما", link: "/about" },
+];
 
 const Header = () => {
-  const navItem = [
-    { name: "صفحه اصلی", link: "/" },
-    { name: "منو", link: "/menu" },
-    { name: "تماس باما", link: "/contact" },
-    { name: "درباره ما", link: "/about" },
-  ];
-
+  const { user } = useAuth();
   const router = useRouter();
   const routerPath = router.pathname;
-
   // console.log(routerPath,link)
   return (
     <div className={routerPath === "/" ? "" : "sub_page"}>
@@ -66,9 +66,15 @@ const Header = () => {
                       3
                     </span>
                   </Link>
-                  <Link href="login" className="btn-auth">
-                    ورود
-                  </Link>
+                  {user ? (
+                    <Link href="/profile" className="btn-auth">
+                      پروفایل
+                    </Link>
+                  ) : (
+                    <Link href="/auth/login" className="btn-auth">
+                      ورود
+                    </Link>
+                  )}
                 </div>
               </div>
             </nav>

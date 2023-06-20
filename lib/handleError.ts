@@ -3,7 +3,7 @@ import { ErrorResponse } from "type";
 
 const handleError = (err: AxiosError<ErrorResponse>): string => {
   if (err.response) {
-    console.log("Error Response", err.response.data);
+    // console.log("Error Response", err.response.data);
     //!below comment show you how to handle specific error
     // if (err.response?.status === 422) {
     //   const errors: string[] = [];

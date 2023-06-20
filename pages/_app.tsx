@@ -9,6 +9,7 @@ import { Router } from "next/router";
 import NProgress from "nprogress";
 import "nprogress/nprogress.css";
 import "@/styles/globals.css"; //!it must be under bootstrap
+import { AuthProvider } from "@/context/AuthContext";
 
 Router.events.on("routeChangeStart", () => NProgress.start());
 Router.events.on("routeChangeComplete", () => NProgress.done());
@@ -20,11 +21,11 @@ export default function App({ Component, pageProps }: AppProps) {
   }, []);
 
   return (
-    <>
+    <AuthProvider>
       <Layout>
         <Component {...pageProps} />
       </Layout>
       <ToastContainer />
-    </>
+    </AuthProvider>
   );
 }
