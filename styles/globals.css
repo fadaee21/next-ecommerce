@@ -1311,3 +1311,11 @@ a:focus {
   border-top-color: #ffbe33;
   border-left-color: #ffbe33;
 }
+
+.food_section .box .detail-box a {
+  font-weight: 600;
+  color: #fff;
+}
+.food_section .box .detail-box a:hover {
+  color: #898989;
+}

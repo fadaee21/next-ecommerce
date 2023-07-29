@@ -29,7 +29,9 @@ const ProductsTab = ({ tabs }: Prop) => {
                 <TabPanel key={index1}>
                   <div className="row grid">
                     {panel.map((product, index2) => (
-                      <Product key={index2} {...product} />
+                      <div key={index2} className="col-sm-6 col-lg-4">
+                        <Product  {...product} />
+                      </div>
                     ))}
                   </div>
                 </TabPanel>

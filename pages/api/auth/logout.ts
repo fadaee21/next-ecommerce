@@ -10,33 +10,33 @@ export default async function handler(
 ) {
   if (req.method === "POST") {
     console.log(req.cookies.login_token);
-    if (!req.cookies.login_token) {
-      res.status(401).json({ message: "ورود نا موفق یکبار دیگر تلاش کنید" });
+    if (!req.cookies.token) {
+      res.status(401).json({ message: "خروج نا موفق یکبار دیگر تلاش کنید" });
       return;
     }
 
     try {
-      const resApi = await apiAxiosServer.post("/auth/check-otp", {
-        otp: req.body.otp,
-        login_token: req.cookies.login_token,
-      });
+      const resApi = await apiAxiosServer.post(
+        "/auth/logout",
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${req.cookies.token}`,
+          },
+        }
+      );
 
-      res.setHeader("Set-Cookie", [
-        cookie.serialize("login_token", "", {
+      res.setHeader(
+        "Set-Cookie",
+        cookie.serialize("token", "", {
           httpOnly: true,
           secure: process.env.NODE_ENV !== "development",
           maxAge: 0,
           path: "/",
-        }),
-        cookie.serialize("token", resApi.data.data.token, {
-          httpOnly: true,
-          secure: process.env.NODE_ENV !== "development",
-          maxAge: 80,
-          path: "/",
-        }),
-      ]);
+        })
+      );
 
-      res.status(200).json({ user: resApi.data.data.user });
+      res.status(200).json({ message: "کاربر از سیستم خارج شد." });
     } catch (err) {
       res.status(422).json({ message: { err: [handleError(err as any)] } });
     }

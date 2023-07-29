@@ -6,7 +6,7 @@ interface Prop {
 }
 const LoginComp = ({ setStep }: Prop) => {
   const { login } = useAuth();
-  const [cellphone, setCellphone] = useState("09126795523");
+  const [cellphone, setCellphone] = useState("09100000000");
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!cellphone) {

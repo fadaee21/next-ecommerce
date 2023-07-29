@@ -4,7 +4,7 @@ import { handleError } from "lib/handleError";
 import { NextRouter, useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import apiAxios from "service/axios";
+import apiAxiosServer from "service/axios";
 import {
   ErrorResponse,
   MenuItemsRoot,
@@ -30,23 +30,23 @@ const Menu = ({ categories, error, menu }: PropCategories) => {
   useEffect(() => {
     error && toast.error(error.message);
   }, [error]);
-  console.log(router.query.search);
+  // console.log(router.query.search);
   const handleFilter = (val: { [key: string]: string }) => async () => {
-    console.log(router.query); //it gives you last url params
-    console.log(val); //it gives you what you click on
+    // console.log(router.query); //it gives you last url params
+    // console.log(val); //it gives you what you click on
     const myQuery: any = { ...router.query, ...val };
-    console.log(myQuery);
+    // console.log(myQuery);
     const searchParams = new URLSearchParams(myQuery).toString();
 
     //if you are in page 2 and then click on pizza sorting, delete page
     //but if you click on page 2, go there and don't delete page from query
-    if (!val.hasOwnProperty('page')) {
-      delete myQuery.page
+    if (!val.hasOwnProperty("page")) {
+      delete myQuery.page;
     }
 
     try {
       setLoadingProductList(true);
-      const res = await apiAxios.get<ProductRoot>(`menu?${searchParams}`);
+      const res = await apiAxiosServer.get<ProductRoot>(`menu?${searchParams}`);
       setProductList(res.data.data.products);
       router.push(`menu?${searchParams}`, undefined, { shallow: true });
     } catch (error) {
@@ -183,9 +183,9 @@ const Menu = ({ categories, error, menu }: PropCategories) => {
               <div className="col-sm-12 col-lg-9">
                 <div className="row gx-3">
                   {productList?.map((product, index) => (
-                    <React.Fragment key={index}>
+                    <div key={index} className="col-sm-6 col-lg-4">
                       <Product {...product} />
-                    </React.Fragment>
+                    </div>
                   ))}
                 </div>
                 <nav className="d-flex justify-content-center mt-5">
@@ -230,9 +230,9 @@ export const getServerSideProps = async ({
   resolvedUrl: string;
 }) => {
   try {
-    const resCategories = await apiAxios.get("/categories");
+    const resCategories = await apiAxiosServer.get("/categories");
     const dataCategories: MenuItemsRoot = await resCategories.data;
-    const resProducts = await apiAxios.get(resolvedUrl);
+    const resProducts = await apiAxiosServer.get(resolvedUrl);
     const dataProducts: ProductRoot = await resProducts.data;
     return {
       props: {

@@ -1,4 +1,4 @@
-import cookie from "cookie";
+import axios from "axios";
 import { handleError } from "lib/handleError";
 import { NextApiRequest, NextApiResponse } from "next";
 import apiAxiosServer from "service/axios";
@@ -8,27 +8,26 @@ export default async function handler(
   res: NextApiResponse
 ) {
   if (req.method === "POST") {
-    if (!req.cookies.login_token) {
+    if (!req.cookies.token) {
       res.status(401).json({ message: "ورود نا موفق یکبار دیگر تلاش کنید" });
       return;
     }
 
     try {
-      const resApi = await apiAxiosServer.post("/auth/resend-otp", {
-        login_token: req.cookies.login_token,
-      });
-
-      res.setHeader(
-        "Set-Cookie",
-        cookie.serialize("login_token", resApi.data.data.login_token, {
-          httpOnly: true,
-          secure: process.env.NODE_ENV !== "development",
-          maxAge: 60 * 60 * 24 * 7, // 1 week
-          path: "/",
-        })
+      const resApi = await apiAxiosServer.post(
+        "/profile/info/edit",
+        {
+          name: req.body.data.name,
+          email: req.body.data.email,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${req.cookies.token}`,
+          },
+        }
       );
 
-      res.status(200).json({ message: "کد ورود دوباره ارسال شد" });
+      res.status(200).json(resApi.data.data);
     } catch (err) {
       res.status(422).json({ message: { err: [handleError(err as any)] } });
     }

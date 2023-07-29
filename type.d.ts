@@ -8,6 +8,7 @@ export interface AuthContextValue {
   loginLoading: boolean;
   user: User | null;
   resendOtp: () => Promise<void>;
+  logout: () => Promise<void>;
 }
 
 export type TabList = "پیتزا" | "برگر" | "پیش غذا و سالاد" | "نوشیدنی";
@@ -124,4 +125,101 @@ export interface User {
   id: number;
   title: string;
   completed: boolean;
+}
+
+export interface UserInfo {
+  id: number;
+  name: string;
+  email: string;
+  cellphone: string;
+  created_at: string; // Assuming the created_at field is a string representing a date/time
+}
+
+export interface AllAddressRoot {
+  status: string;
+  message: any;
+  data: Data;
+}
+
+export interface AllAddress {
+  addresses: Address[];
+  provinces: Province[];
+  cities: City[];
+}
+
+export interface Address {
+  id: number;
+  title: string;
+  address: string;
+  cellphone: string;
+  postal_code: string;
+  user_id: number;
+  province_id: number;
+  city_id: number;
+  deleted_at: any;
+  created_at: any;
+  updated_at: any;
+}
+
+export interface Province {
+  id: number;
+  name: string;
+  deleted_at: any;
+  created_at: any;
+  updated_at: any;
+}
+
+export interface City {
+  id: number;
+  name: string;
+  province_id: number;
+  deleted_at: any;
+  created_at: any;
+  updated_at: any;
+}
+
+export interface OrderItem {
+  id: number;
+  product_primary_image: string;
+  product_name: string;
+  price: number;
+  quantity: number;
+  subtotal: number;
+}
+
+export interface Order {
+  id: number;
+  address_title: string;
+  status: string;
+  payment_status: string;
+  paying_amount: number;
+  created_at: string;
+  order_items: OrderItem[];
+}
+
+export interface OrderData {
+  orders: Order[];
+  links: Links;
+  meta: Meta;
+}
+
+export interface OrderRoot {
+  status: string;
+  message: any;
+  data: Data;
+}
+
+export interface TransactionData {
+  transactions: Transaction[];
+  links: Links;
+  meta: Meta;
+}
+
+export interface Transaction {
+  id: number;
+  order_id: number;
+  amount: number;
+  status: string;
+  trans_id?: string;
+  created_at: string;
 }

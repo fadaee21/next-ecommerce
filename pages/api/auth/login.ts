@@ -1,7 +1,7 @@
 import { AxiosError } from "axios";
 import { handleError } from "lib/handleError";
 import { NextApiRequest, NextApiResponse } from "next";
-import apiAxios from "service/axios";
+import apiAxiosServer from "service/axios";
 import { ErrorResponse } from "type";
 import cookie from "cookie";
 export default async function handler(
@@ -11,7 +11,7 @@ export default async function handler(
   if (req.method === "POST") {
     // res.status(200).json({ message: "ok" });
     try {
-      const resApi = await apiAxios.post("/auth/login", {
+      const resApi = await apiAxiosServer.post("/auth/login", {
         cellphone: req.body.cellphone,
       });
       //   console.log(resApi.data.data.login_token)

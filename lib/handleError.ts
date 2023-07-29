@@ -2,7 +2,7 @@ import { AxiosError } from "axios";
 import { ErrorResponse } from "type";
 
 const handleError = (err: AxiosError<ErrorResponse>): string => {
-  if (err.response) {
+  if (err.response && err.response.data?.message !== undefined) {
     // console.log("Error Response", err.response.data);
     //!below comment show you how to handle specific error
     // if (err.response?.status === 422) {
@@ -15,10 +15,13 @@ const handleError = (err: AxiosError<ErrorResponse>): string => {
     //   return errors.join();
     // }
     const errors: string[] = [];
-    Object.keys(err.response.data?.message).map((key) => {
-      err.response?.data?.message[key].map((e) => {
-        errors.push(e);
-      });
+    Object.keys(err.response?.data?.message).map((key) => {
+      const value = err.response?.data?.message[key];
+      if (Array.isArray(value)) {
+        value.map((e) => {
+          errors.push(e);
+        });
+      }
     });
     return errors.join();
   } else if (err.request) {

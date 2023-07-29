@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import heroImage from "../../public/images/hero-bg.jpg";
 import Link from "next/link";
 import { useRouter } from "next/router";
+
 import { useAuth } from "@/context/AuthContext";
+
 const navItem = [
   { name: "صفحه اصلی", link: "/" },
   { name: "منو", link: "/menu" },
@@ -15,7 +17,6 @@ const Header = () => {
   const { user } = useAuth();
   const router = useRouter();
   const routerPath = router.pathname;
-  // console.log(routerPath,link)
   return (
     <div className={routerPath === "/" ? "" : "sub_page"}>
       <div className="hero_area">
@@ -66,7 +67,7 @@ const Header = () => {
                       3
                     </span>
                   </Link>
-                  {user ? (
+                  {user?.id ? (
                     <Link href="/profile" className="btn-auth">
                       پروفایل
                     </Link>
