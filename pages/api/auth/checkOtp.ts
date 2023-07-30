@@ -1,7 +1,7 @@
 // import { AxiosError } from "axios";
 import { handleError } from "lib/handleError";
 import { NextApiRequest, NextApiResponse } from "next";
-import apiAxiosServer from "service/axios";
+import apiAxiosDataBase from "service/axios";
 // import { ErrorResponse } from "type";
 import cookie from "cookie";
 export default async function handler(
@@ -16,7 +16,7 @@ export default async function handler(
     }
 
     try {
-      const resApi = await apiAxiosServer.post("/auth/check-otp", {
+      const resApi = await apiAxiosDataBase.post("/auth/check-otp", {
         otp: req.body.otp,
         login_token: req.cookies.login_token,
       });

@@ -10,9 +10,10 @@ import NProgress from "nprogress";
 import "nprogress/nprogress.css";
 import "@/styles/globals.css"; //!it must be under bootstrap
 import { AuthProvider } from "@/context/AuthContext";
-import { apiAxiosClient } from "service/axios";
+import { apiAxiosApp } from "service/axios";
 import { SWRConfig } from "swr";
-
+import { Provider } from "react-redux";
+import {store} from "../store/store"
 Router.events.on("routeChangeStart", () => NProgress.start());
 Router.events.on("routeChangeComplete", () => NProgress.done());
 Router.events.on("routeChangeError", () => NProgress.done());
@@ -27,12 +28,14 @@ export default function App({ Component, pageProps }: AppProps) {
       <SWRConfig
         value={{
           fetcher: (url: string) =>
-            apiAxiosClient.get(url).then((res) => res.data),
+            apiAxiosApp.get(url).then((res) => res.data),
         }}
       >
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
+        <Provider store={store}>
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </Provider>
         <ToastContainer />
       </SWRConfig>
     </AuthProvider>

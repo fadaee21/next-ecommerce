@@ -4,7 +4,7 @@ import { handleError } from "lib/handleError";
 import { NextRouter, useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import apiAxiosServer from "service/axios";
+import apiAxiosDataBase from "service/axios";
 import {
   ErrorResponse,
   MenuItemsRoot,
@@ -46,7 +46,7 @@ const Menu = ({ categories, error, menu }: PropCategories) => {
 
     try {
       setLoadingProductList(true);
-      const res = await apiAxiosServer.get<ProductRoot>(`menu?${searchParams}`);
+      const res = await apiAxiosDataBase.get<ProductRoot>(`menu?${searchParams}`);
       setProductList(res.data.data.products);
       router.push(`menu?${searchParams}`, undefined, { shallow: true });
     } catch (error) {
@@ -230,9 +230,9 @@ export const getServerSideProps = async ({
   resolvedUrl: string;
 }) => {
   try {
-    const resCategories = await apiAxiosServer.get("/categories");
+    const resCategories = await apiAxiosDataBase.get("/categories");
     const dataCategories: MenuItemsRoot = await resCategories.data;
-    const resProducts = await apiAxiosServer.get(resolvedUrl);
+    const resProducts = await apiAxiosDataBase.get(resolvedUrl);
     const dataProducts: ProductRoot = await resProducts.data;
     return {
       props: {

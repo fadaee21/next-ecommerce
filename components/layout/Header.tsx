@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import heroImage from "../../public/images/hero-bg.jpg";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
 import { useAuth } from "@/context/AuthContext";
+import { selectCart } from "@/store/slices/cartSlice";
+import { useAppSelector } from "@/store/hooks";
 
 const navItem = [
   { name: "صفحه اصلی", link: "/" },
@@ -17,6 +19,11 @@ const Header = () => {
   const { user } = useAuth();
   const router = useRouter();
   const routerPath = router.pathname;
+  const state = useAppSelector(selectCart);
+  const [cart, setCart] = useState<typeof state>([]);
+  useEffect(() => setCart(state), [state]);
+  const cartLength = useMemo(() => cart.length, [cart]);
+
   return (
     <div className={routerPath === "/" ? "" : "sub_page"}>
       <div className="hero_area">
@@ -61,10 +68,10 @@ const Header = () => {
                   ))}
                 </ul>
                 <div className="user_option">
-                  <Link className="cart_link position-relative" href="cart">
+                  <Link className="cart_link position-relative" href="/cart">
                     <i className="bi bi-cart-fill text-white fs-5"></i>
                     <span className="position-absolute top-0 translate-middle badge rounded-pill">
-                      3
+                      {cartLength}
                     </span>
                   </Link>
                   {user?.id ? (

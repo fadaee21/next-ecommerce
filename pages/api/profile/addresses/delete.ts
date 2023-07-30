@@ -1,6 +1,6 @@
 import { handleError } from "lib/handleError";
 import { NextApiRequest, NextApiResponse } from "next";
-import apiAxiosServer from "service/axios";
+import apiAxiosDataBase from "service/axios";
 
 export default async function handler(
   req: NextApiRequest,
@@ -13,7 +13,7 @@ export default async function handler(
     }
 
     try {
-      const resApi = await apiAxiosServer.post(
+      const resApi = await apiAxiosDataBase.post(
         "/profile/addresses/delete",
         {
           address_id: req.body.address_id,

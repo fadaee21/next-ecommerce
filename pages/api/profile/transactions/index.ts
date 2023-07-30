@@ -1,5 +1,5 @@
 import { handleError } from "lib/handleError";
-import apiAxiosServer from "service/axios";
+import apiAxiosDataBase from "service/axios";
 import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(
@@ -15,7 +15,7 @@ export default async function handler(
     }
 
     try {
-      const resApi = await apiAxiosServer.get(
+      const resApi = await apiAxiosDataBase.get(
         `/profile/transactions?page=${req.query.page}`,
         {
           headers: {

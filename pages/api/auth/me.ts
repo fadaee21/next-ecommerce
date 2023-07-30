@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import apiAxiosServer from "service/axios";
+import apiAxiosDataBase from "service/axios";
 import cookie from "cookie";
 import { handleError } from "lib/handleError";
 
@@ -21,7 +21,7 @@ export default async function handler(
       return;
     }
     try {
-      const resApi = await apiAxiosServer.post(
+      const resApi = await apiAxiosDataBase.post(
         "/auth/me",
         {},
         {

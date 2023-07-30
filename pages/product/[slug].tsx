@@ -2,12 +2,20 @@ import { AxiosError } from "axios";
 import { handleError } from "lib/handleError";
 import { numberFormat } from "lib/numberFormat";
 import { salePercent } from "lib/salePercent";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { toast } from "react-toastify";
-import apiAxiosServer from "service/axios";
+import apiAxiosDataBase from "service/axios";
 import { ErrorResponse, ProductsTabsComplete, TabPanelItem } from "type";
 import Image from "next/image";
 import Product from "@/components/product/Product";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import {
+  increment,
+  addToCart,
+  removeFromCart,
+  selectCart,
+} from "@/store/slices/cartSlice";
+import { useRouter } from "next/router";
 interface Prop {
   product: TabPanelItem | undefined;
   randomProduct: TabPanelItem[] | undefined;
@@ -16,6 +24,10 @@ interface Prop {
 
 const ProductPage = ({ product, error, randomProduct }: Prop) => {
   const {
+    query: { slug },
+  } = useRouter();
+  const {
+    id,
     name,
     is_sale,
     sale_price,
@@ -31,6 +43,29 @@ const ProductPage = ({ product, error, randomProduct }: Prop) => {
     error && toast.error(error.message);
   }, [error]);
   console.log(randomProduct);
+
+  const dispatch = useAppDispatch();
+
+  const handleClickToCart = () => {
+    dispatch(removeFromCart({id}));
+    dispatch(
+      addToCart(
+        name,
+        description,
+        id,
+        is_sale,
+        price,
+        sale_price,
+        slug,
+        quantity,
+        quantityRes,
+        primary_image,
+        primary_image_blurDataURL,
+      )
+    );
+    toast.success("محصول به سبد خرید اضافه شد");
+  };
+
   return (
     <>
       {product && (
@@ -60,7 +95,9 @@ const ProductPage = ({ product, error, randomProduct }: Prop) => {
                     <p>{description}</p>
 
                     <div className="mt-5 d-flex">
-                      <button className="btn-add">افزودن به سبد خرید</button>
+                      <button className="btn-add" onClick={handleClickToCart}>
+                        افزودن به سبد خرید
+                      </button>
                       <div className="input-counter ms-4">
                         <span
                           className="plus-btn"
@@ -193,8 +230,8 @@ export default ProductPage;
 type Query = { query: { slug: string } };
 export const getServerSideProps = async ({ query }: Query) => {
   try {
-    const res = await apiAxiosServer.get(`/products/${encodeURI(query.slug)}`);
-    const resRandom = await apiAxiosServer.get(`/random-products?count=4`);
+    const res = await apiAxiosDataBase.get(`/products/${encodeURI(query.slug)}`);
+    const resRandom = await apiAxiosDataBase.get(`/random-products?count=4`);
     const data: ProductsTabsComplete = await res.data;
     const randomProduct: ProductsTabsComplete = await resRandom.data;
     console.log(res);

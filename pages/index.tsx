@@ -1,7 +1,7 @@
 import { AxiosError } from "axios";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
-import apiAxiosServer from "service/axios";
+import apiAxiosDataBase from "service/axios";
 import { ErrorResponse, ProductsTabs, ProductsTabsComplete } from "type";
 import Features from "@/components/features";
 import { handleError } from "lib/handleError";
@@ -32,7 +32,7 @@ export default Home;
 
 export const getServerSideProps = async () => {
   try {
-    const res = await apiAxiosServer.get("/products/products-tabs");
+    const res = await apiAxiosDataBase.get("/products/products-tabs");
     const data: ProductsTabsComplete = await res.data;
     return {
       props: {

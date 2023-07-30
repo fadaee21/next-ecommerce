@@ -2,7 +2,7 @@ import { AxiosError } from "axios";
 import { handleError } from "lib/handleError";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
-import apiAxiosServer from "service/axios";
+import apiAxiosDataBase from "service/axios";
 import { ErrorResponse } from "type";
 
 const ContactForm = () => {
@@ -20,7 +20,7 @@ const ContactForm = () => {
     }
     try {
       setLoading(true);
-      const res = await apiAxiosServer.post("/contact-us", {
+      const res = await apiAxiosDataBase.post("/contact-us", {
         name,
         email,
         subject,

@@ -223,3 +223,8 @@ export interface Transaction {
   trans_id?: string;
   created_at: string;
 }
+
+export interface CouponType {
+  code: null | string;
+  percent: number;
+}

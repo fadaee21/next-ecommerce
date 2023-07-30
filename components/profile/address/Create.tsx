@@ -2,7 +2,7 @@ import { handleError } from "lib/handleError";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-import { apiAxiosClient } from "service/axios";
+import { apiAxiosApp } from "service/axios";
 import { useSWRConfig } from "swr";
 
 import { City, Province } from "type";
@@ -31,7 +31,7 @@ const Create = ({ provinces, cities }: Prop) => {
   const onSubmit = async (data: any) => {
     try {
       setLoading(true);
-      const res = await apiAxiosClient.post(`/profile/addresses/create`, {
+      const res = await apiAxiosApp.post(`/profile/addresses/create`, {
         data,
       });
       toast.success("آدرس جدید با موفقیت ایجاد شد");

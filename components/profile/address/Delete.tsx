@@ -1,7 +1,7 @@
 import { handleError } from "lib/handleError";
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { apiAxiosClient } from "service/axios";
+import { apiAxiosApp } from "service/axios";
 import { useSWRConfig } from "swr";
 
 const Delete = ({ id }: { id: number }) => {
@@ -13,7 +13,7 @@ const Delete = ({ id }: { id: number }) => {
     try {
       setLoading(true);
 
-      const res = await apiAxiosClient.post(`/profile/addresses/delete`, {
+      const res = await apiAxiosApp.post(`/profile/addresses/delete`, {
         address_id: id,
       });
       toast.success("حذف آدرس با موفقیت انجام شد");

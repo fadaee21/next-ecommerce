@@ -5,7 +5,7 @@ import Loading from "@/components/profile/Loading";
 import { handleError } from "lib/handleError";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useState } from "react";
-import { apiAxiosClient } from "service/axios";
+import { apiAxiosApp } from "service/axios";
 import { UserInfo } from "type";
 type Inputs = {
   name: string;
@@ -31,7 +31,7 @@ const ProfilePage = () => {
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     try {
       setLoadingPost(true);
-      const res = await apiAxiosClient.post("/profile/info/edit", { data });
+      const res = await apiAxiosApp.post("/profile/info/edit", { data });
       toast.success("ویرایش اطلاعات با موفقیت انجام شد");
       mutate(res.data);
     } catch (error) {

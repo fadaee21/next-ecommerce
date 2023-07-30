@@ -3,7 +3,7 @@ import { handleError } from "lib/handleError";
 import { useRouter } from "next/router";
 import { createContext, useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { apiAxiosClient } from "service/axios";
+import { apiAxiosApp } from "service/axios";
 import { AuthContextValue, Children, ErrorResponse, User } from "type";
 
 const AuthContext = createContext<AuthContextValue | undefined>(undefined);
@@ -17,7 +17,7 @@ export const AuthProvider = ({ children }: Children) => {
   const login = async (cellphone: string) => {
     try {
       setLoginLoading(true);
-      const res = await apiAxiosClient.post(`/auth/login`, { cellphone });
+      const res = await apiAxiosApp.post(`/auth/login`, { cellphone });
       toast.success(res.data.message);
       console.log(res);
     } catch (error) {
@@ -30,7 +30,7 @@ export const AuthProvider = ({ children }: Children) => {
   const checkOtp = async (otp: string) => {
     try {
       setLoginLoading(true);
-      const res = await apiAxiosClient.post(`/auth/checkOtp`, { otp });
+      const res = await apiAxiosApp.post(`/auth/checkOtp`, { otp });
       setUser(res.data.user);
       router.push("/");
     } catch (error) {
@@ -42,7 +42,7 @@ export const AuthProvider = ({ children }: Children) => {
 
   const resendOtp = async () => {
     try {
-      await apiAxiosClient.post(`/auth/resendOtp`);
+      await apiAxiosApp.post(`/auth/resendOtp`);
 
       toast.success("کد ورود دوباره برای شما ارسال شد");
     } catch (error) {
@@ -52,7 +52,7 @@ export const AuthProvider = ({ children }: Children) => {
   const logout = async () => {
     try {
       setLoginLoading(true);
-      await apiAxiosClient.post(`/auth/logout`);
+      await apiAxiosApp.post(`/auth/logout`);
       setUser(null);
       router.push("/");
     } catch (error) {
@@ -66,7 +66,7 @@ export const AuthProvider = ({ children }: Children) => {
     const checkedUserLoggedIn = async () => {
       try {
         setLoginLoading(true);
-        const res = await apiAxiosClient.post(`/auth/me`);
+        const res = await apiAxiosApp.post(`/auth/me`);
         if (res.status === 200) {
           setUser(res.data.user);
         } else {

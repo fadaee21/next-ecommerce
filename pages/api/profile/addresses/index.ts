@@ -1,6 +1,6 @@
 import { handleError } from "lib/handleError";
 import { NextApiRequest, NextApiResponse } from "next";
-import apiAxiosServer from "service/axios";
+import apiAxiosDataBase from "service/axios";
 
 export default async function handler(
   req: NextApiRequest,
@@ -13,7 +13,7 @@ export default async function handler(
     }
 
     try {
-      const resApi = await apiAxiosServer.get("/profile/addresses", {
+      const resApi = await apiAxiosDataBase.get("/profile/addresses", {
         headers: {
           Authorization: `Bearer ${req.cookies.token}`,
         },

@@ -3,7 +3,7 @@ import { handleError } from "lib/handleError";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-import { apiAxiosClient } from "service/axios";
+import { apiAxiosApp } from "service/axios";
 import { useSWRConfig } from "swr";
 import Delete from "./Delete";
 
@@ -35,7 +35,7 @@ const Edit = ({ address, cities, provinces }: Prop) => {
   const onSubmit = async (data: any) => {
     try {
       setLoading(true);
-      const res = await apiAxiosClient.post(`/profile/addresses/edit`, {
+      const res = await apiAxiosApp.post(`/profile/addresses/edit`, {
         data,
         address_id: address.id,
       });
