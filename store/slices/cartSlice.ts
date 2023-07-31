@@ -1,10 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../store";
-import { TabPanelItem } from "type";
+import { CartState } from "type";
 import { getStorage, saveStorage } from "lib/storageFunc";
 type Qty = { qty: number };
-
-type CartState = TabPanelItem & Qty;
 
 const initialState: CartState[] = getStorage("shopping-cart") || [];
 export const cartSlice = createSlice({
@@ -28,7 +26,7 @@ export const cartSlice = createSlice({
         qty,
         quantity,
         primary_image,
-        primary_image_blurDataURL,
+        primary_image_blurDataURL
       ) => {
         return {
           payload: {
@@ -75,6 +73,7 @@ export const cartSlice = createSlice({
     },
     clearCart: (state) => {
       state.splice(0, state.length);
+      saveStorage("shopping-cart", state);
     },
   },
 });

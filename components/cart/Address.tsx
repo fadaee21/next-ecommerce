@@ -8,10 +8,9 @@ interface props {
 }
 const Address = ({ setAddressId }: props) => {
   const { data, error } = useSWR<Address[]>(`/cart/addresses`);
-
-  if (error) {
-    toast.error(handleError(error));
-  }
+  // if (error) {
+  //   toast.error(handleError(error));
+  // }
 
   if (!data)
     return <div className="spinner-border spinner-border-sm ms-2"></div>;

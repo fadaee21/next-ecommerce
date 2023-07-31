@@ -14,6 +14,7 @@ import { useEffect, useState } from "react";
 import Coupon from "@/components/cart/Coupon";
 import { CouponType } from "type";
 import Address from "@/components/cart/Address";
+import Payment from "@/components/cart/Payment";
 const CartPage = () => {
   const state = useAppSelector(selectCart);
   const [cart, setCart] = useState<typeof state>([]);
@@ -226,9 +227,7 @@ const CartPage = () => {
                             </div>
                           </li>
                         </ul>
-                        <button className="user_option btn-auth mt-4">
-                          پرداخت
-                        </button>
+                        <Payment addressId={addressId} cart={cart} coupon={coupon} />
                       </div>
                     </div>
                   </div>

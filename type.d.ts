@@ -161,6 +161,8 @@ export interface Address {
   updated_at: any;
 }
 
+
+export type CartState = TabPanelItem & Qty;
 export interface Province {
   id: number;
   name: string;

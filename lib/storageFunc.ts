@@ -1,6 +1,8 @@
 const saveStorage = (key: string, data: any[]) => {
-  const serializedData = JSON.stringify(data);
-  localStorage.setItem(key, serializedData);
+  if (typeof window !== "undefined") {
+    const serializedData = JSON.stringify(data);
+    localStorage.setItem(key, serializedData);
+  }
 };
 
 const getStorage = (key: string): any[] => {
